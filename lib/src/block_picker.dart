@@ -45,7 +45,7 @@ class BlockPicker extends StatefulWidget {
   });
 
   final Color? pickerColor;
-  final ValueChanged<Color> onColorChanged;
+  final ValueChanged<Color?> onColorChanged;
   final List<Color> availableColors;
   final PickerLayoutBuilder layoutBuilder;
   final PickerItemBuilder itemBuilder;
@@ -113,8 +113,11 @@ class _BlockPickerState extends State<BlockPicker> {
   }
 
   void changeColor(Color color) {
-    setState(() => _currentColor = color);
-    widget.onColorChanged(color);
+    if (_currentColor != color)
+      setState(() => _currentColor = color);
+    else
+      setState(() => _currentColor = null);
+    widget.onColorChanged(_currentColor);
   }
 
   @override
