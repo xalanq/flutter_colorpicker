@@ -44,7 +44,7 @@ class BlockPicker extends StatefulWidget {
     this.itemBuilder = defaultItemBuilder,
   });
 
-  final Color pickerColor;
+  final Color? pickerColor;
   final ValueChanged<Color> onColorChanged;
   final List<Color> availableColors;
   final PickerLayoutBuilder layoutBuilder;
@@ -75,8 +75,8 @@ class BlockPicker extends StatefulWidget {
         color: color,
         boxShadow: [
           BoxShadow(
-            color: color.withOpacity(0.8),
-            offset: Offset(1.0, 2.0),
+            color: color == Colors.white ? Colors.black : color.withOpacity(0.8),
+            offset: color == Colors.white ? Offset(0.5, 1.0) : Offset(1.0, 2.0),
             blurRadius: 3.0,
           ),
         ],
@@ -104,7 +104,7 @@ class BlockPicker extends StatefulWidget {
 }
 
 class _BlockPickerState extends State<BlockPicker> {
-  late Color _currentColor;
+  Color? _currentColor;
 
   @override
   void initState() {
@@ -123,7 +123,7 @@ class _BlockPickerState extends State<BlockPicker> {
       context,
       widget.availableColors,
       (Color color, [bool? _, Function? __]) => widget.itemBuilder(
-          color, _currentColor.value == color.value, () => changeColor(color)),
+          color, _currentColor?.value == color.value, () => changeColor(color)),
     );
   }
 }
